@@ -3,7 +3,7 @@ package parcial1;
 
 public class Lista<T> implements ILista<T> {
 
-    private Nodo<T> primero;
+    protected Nodo<T> primero;
 
     public Lista() {
         primero = null;
@@ -77,7 +77,33 @@ public class Lista<T> implements ILista<T> {
 
     @Override
     public boolean eliminar(Comparable clave) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (esVacia()) {
+            return false;
+        }
+        if (primero.getSiguiente() == null) {
+            if (primero.getEtiqueta().equals(clave)) {
+                primero = null;
+                return true;
+            }
+        }
+        Nodo<T> aux = primero;
+        if (aux.getEtiqueta().compareTo(clave) == 0) {
+            //Eliminamos el primer elemento
+            Nodo<T> temp1 = aux;
+            Nodo<T> temp = aux.getSiguiente();
+            primero = temp;
+            return true;
+        }
+        while (aux.getSiguiente() != null) {
+            if (aux.getSiguiente().getEtiqueta().equals(clave)) {
+                Nodo<T> temp = aux.getSiguiente();
+                aux.setSiguiente(temp.getSiguiente());
+                return true;
+
+            }
+            aux = aux.getSiguiente();
+        }
+        return false;
     }
 
     @Override
@@ -114,7 +140,14 @@ public class Lista<T> implements ILista<T> {
 
     @Override
     public Nodo<T> quitarPrimero() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (esVacia()) {
+            return null;
+        } else {
+            Nodo<T> aux = primero;
+            primero = primero.getSiguiente();
+            aux.setSiguiente(null);
+            return aux;
+        }
     }
 
 }
