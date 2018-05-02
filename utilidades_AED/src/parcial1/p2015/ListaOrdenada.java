@@ -1,4 +1,4 @@
-package parcial1;
+package parcial1.p2015;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,5 +38,32 @@ public class ListaOrdenada<T> extends Lista<T> {
             }
         }
     }
-
+    
+    public ListaOrdenada<T> mezclar(ListaOrdenada<T> otraLista) {
+        ListaOrdenada<T> nuevaLista = new ListaOrdenada<>();
+        while (!esVacia()) {
+            nuevaLista.insertar(quitarPrimero());
+        }
+        while (!otraLista.esVacia()) {
+            nuevaLista.insertar(otraLista.quitarPrimero());
+        }
+        return nuevaLista;
+    }
+    
+    public void retirarDuplicados() {
+        Nodo<T> aux1 = primero;
+        while (aux1 != null) {
+            Nodo<T> aux2 = aux1.getSiguiente();
+            while (aux2 != null) {
+                if (aux1.getEtiqueta().equals(aux2.getEtiqueta())) {
+                    Nodo<T> aEliminar = aux2;
+                    aux2 = aux2.getSiguiente();
+                    eliminar(aEliminar.getEtiqueta());
+                } else {
+                    aux2 = aux2.getSiguiente();
+                }
+            }
+            aux1 = aux1.getSiguiente();
+        }
+    }
 }
